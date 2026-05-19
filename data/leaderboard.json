@@ -1,0 +1,121 @@
+{
+  "meta": {
+    "last_updated": "2026-05-18",
+    "track_labels": {
+      "tau2":     "τ²-bench",
+      "webarena": "WebArena-Infinity",
+      "swe":      "SWE-Gym",
+      "codeqa":   "MemGym-CodeQA",
+      "dr":       "MemGym-DR"
+    },
+    "track_descriptions": {
+      "tau2":     "Tool-use dialogue. Task success rate (%), paired baseline-vs-memory.",
+      "webarena": "Computer use. Task success rate (%) on text accessibility-tree observations.",
+      "swe":      "Coding. SWE-Gym resolve rate (%); memory is measured for compression effect.",
+      "codeqa":   "Synthetic code-QA. Accuracy at fixed token budget; baseline is no-memory.",
+      "dr":       "Synthetic deep-research. Judge score in [0,1]; baseline is no-memory."
+    }
+  },
+  "entries": [
+    {
+      "track": "tau2", "method": "Summary",
+      "score": 58.7, "score_units": "%",
+      "base_model": "Haiku 4.5",
+      "baseline": 50.0, "delta": 8.7,
+      "n": 288,
+      "notes": "Best memory gain on τ²-bench",
+      "is_baseline": false,
+      "date_added": "2026-05-01"
+    },
+    {
+      "track": "tau2", "method": "None (no memory)",
+      "score": 50.0, "score_units": "%",
+      "base_model": "Haiku 4.5",
+      "baseline": null, "delta": null,
+      "n": 288,
+      "notes": "Paired baseline",
+      "is_baseline": true,
+      "date_added": "2026-05-01"
+    },
+    {
+      "track": "webarena", "method": "Structured",
+      "score": 38.6, "score_units": "%",
+      "base_model": "Haiku 4.5",
+      "baseline": 34.3, "delta": 4.3,
+      "n": 140,
+      "notes": "Best memory gain on WebArena-Infinity (prefix-injection split)",
+      "is_baseline": false,
+      "date_added": "2026-05-01"
+    },
+    {
+      "track": "webarena", "method": "None (no memory)",
+      "score": 34.3, "score_units": "%",
+      "base_model": "Haiku 4.5",
+      "baseline": null, "delta": null,
+      "n": 140,
+      "notes": "Paired baseline",
+      "is_baseline": true,
+      "date_added": "2026-05-01"
+    },
+    {
+      "track": "swe", "method": "Summary",
+      "score": 42.8, "score_units": "%",
+      "base_model": "Sonnet 4.5",
+      "baseline": 42.8, "delta": 0.0,
+      "n": 1041,
+      "notes": "1.47× context compression; resolve rate unchanged",
+      "is_baseline": false,
+      "date_added": "2026-05-01"
+    },
+    {
+      "track": "swe", "method": "None (no memory)",
+      "score": 42.8, "score_units": "%",
+      "base_model": "Sonnet 4.5",
+      "baseline": null, "delta": null,
+      "n": 1041,
+      "notes": "Paired baseline",
+      "is_baseline": true,
+      "date_added": "2026-05-01"
+    },
+    {
+      "track": "codeqa", "method": "A-Mem",
+      "score": 0.75, "score_units": "acc",
+      "base_model": "—",
+      "baseline": 0.20, "delta": 0.55,
+      "n": 2131,
+      "notes": "QA accuracy at 500k-token memory budget",
+      "is_baseline": false,
+      "date_added": "2026-05-01"
+    },
+    {
+      "track": "codeqa", "method": "None (no memory)",
+      "score": 0.20, "score_units": "acc",
+      "base_model": "—",
+      "baseline": null, "delta": null,
+      "n": 2131,
+      "notes": "Paired baseline at 500k-token budget",
+      "is_baseline": true,
+      "date_added": "2026-05-01"
+    },
+    {
+      "track": "dr", "method": "A-Mem",
+      "score": 0.518, "score_units": "judge",
+      "base_model": "—",
+      "baseline": 0.009, "delta": 0.509,
+      "n": 1194,
+      "notes": "Judge score at 5/6-hop; max memory pressure",
+      "is_baseline": false,
+      "date_added": "2026-05-01"
+    },
+    {
+      "track": "dr", "method": "None (no memory)",
+      "score": 0.009, "score_units": "judge",
+      "base_model": "—",
+      "baseline": null, "delta": null,
+      "n": 1194,
+      "notes": "Paired baseline at 5/6-hop",
+      "is_baseline": true,
+      "date_added": "2026-05-01"
+    }
+  ]
+}

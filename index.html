@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MemGym — a Long-Horizon Memory Environment for LLM Agents</title>
+  <meta name="description" content="MemGym unifies five evaluation tracks across four agentic regimes behind one memory-reasoning interface, with memory-isolated scoring and a lightweight reward model.">
+
+  <meta property="og:title" content="MemGym: a Long-Horizon Memory Environment for LLM Agents">
+  <meta property="og:description" content="A benchmark for agentic memory across dialogue, coding, web, and deep-research tasks.">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="assets/figures/intro.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<main>
+
+  <!-- ───────────────────────────── Hero ───────────────────────────── -->
+  <header class="hero">
+    <div class="prose">
+      <span class="venue-badge">NeurIPS 2026 · under review</span>
+      <h1>MemGym</h1>
+      <p class="subtitle">a Long-Horizon Memory Environment for LLM Agents</p>
+
+      <p class="authors">
+        <a href="#">Wujiang Xu</a><sup>1</sup>,
+        <a href="#">Yu&nbsp;<span class="todo">…</span></a><sup>1</sup>,
+        <a href="#">Shixiong&nbsp;<span class="todo">…</span></a><sup>1</sup>,
+        <a href="#">Sambit&nbsp;<span class="todo">…</span></a><sup>2</sup>,
+        <a href="#">Kaiqu&nbsp;Liang</a><sup>3</sup>,
+        <span class="todo">others</span><sup>1</sup>
+      </p>
+      <p class="affiliations">
+        <sup>1</sup>Rutgers University &nbsp;·&nbsp;
+        <sup>2</sup>Capital One &nbsp;·&nbsp;
+        <sup>3</sup>Princeton University
+      </p>
+
+      <div class="hero-buttons">
+        <!-- TODO: replace href with the arXiv URL once available, and remove aria-disabled. -->
+        <a class="btn btn-primary btn-disabled" aria-disabled="true" role="link">
+          <span class="btn-icon" aria-hidden="true">📄</span> arXiv · coming soon
+        </a>
+        <a class="btn btn-outline" href="https://github.com/WujiangXu/MemGym" target="_blank" rel="noopener">
+          <span class="btn-icon" aria-hidden="true">⌥</span> GitHub
+        </a>
+        <button class="btn btn-outline" id="open-bibtex" type="button">
+          <span class="btn-icon" aria-hidden="true">❝</span> BibTeX
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ─────────────────────────── Abstract ─────────────────────────── -->
+  <section id="abstract">
+    <div class="prose">
+      <h2>Abstract</h2>
+      <p>
+        Memory is a central capability for LLM agents operating across long-horizon tasks.
+        Existing memory benchmarks predominantly evaluate retention of personalized information
+        in multi-turn chat scenarios, overlooking the dynamic memory formation that occurs during
+        extended agent execution. Consequently, the memory systems they produce transfer poorly
+        to realistic agentic environments such as coding and web navigation.
+      </p>
+      <p>
+        We present <strong>MemGym</strong>, a benchmark for agentic memory that unifies existing
+        agent gyms and in-house memory-grounded pipelines behind one memory–reasoning interface.
+        MemGym spans <strong>five evaluation tracks</strong> grouped into four agentic regimes:
+        tool-use dialogue (τ²-bench), multi-turn deep-research search (MemGym-DR),
+        coding (SWE-Gym and MemGym-CodeQA), and computer use (WebArena-Infinity).
+        MemGym reports <em>memory-isolated</em> scores that decouple memory performance from
+        reasoning, retrieval, and tool-use ability, so memory strategies can be ranked without
+        those confounders.
+      </p>
+      <p>
+        Our synthetic pipelines for MemGym-CodeQA and MemGym-DR are length-controllable,
+        ablation-verified at every stage, and tightly aligned with downstream scenarios.
+        To make evaluation on coding environments academically tractable, we train
+        <strong>MemRM</strong>, a lightweight reward model (Qwen3-1.7B fine-tuned with QLoRA)
+        that scores compression quality as a fast scalar read in place of full Docker rollouts.
+        We release MemGym, MemRM, the labeled paired-trajectory corpus, and all pipeline code
+        as open infrastructure.
+      </p>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── Overview ─────────────────────────── -->
+  <section id="overview" class="figure-section">
+    <figure>
+      <img src="assets/figures/intro.png"
+           srcset="assets/figures/intro@2x.png 2x"
+           alt="MemGym overview: five evaluation tracks across four agentic regimes, all sharing a single memory-reasoning interface that enables memory-isolated scoring."
+           loading="eager">
+      <figcaption>
+        <strong>Figure 1.</strong> MemGym unifies five evaluation tracks across four agentic
+        regimes (tool-use dialogue, multi-turn search, coding, computer use) behind a shared
+        interface that separates memory from reasoning and supports memory-isolated scoring
+        with explicit memory rewards.
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- ──────────────────────── Highlight pills ─────────────────────── -->
+  <section id="highlights">
+    <div class="stat-row">
+      <div class="stat-pill">
+        <div class="stat-num">5</div>
+        <div class="stat-label">evaluation tracks</div>
+      </div>
+      <div class="stat-pill">
+        <div class="stat-num">0.985</div>
+        <div class="stat-label">MemRM AUROC<br><span class="muted">on SWE-Gym IID</span></div>
+      </div>
+      <div class="stat-pill">
+        <div class="stat-num">+8.7<span class="pp">pp</span></div>
+        <div class="stat-label">memory gain<br><span class="muted">on τ²-bench (Haiku 4.5)</span></div>
+      </div>
+      <div class="stat-pill">
+        <div class="stat-num">1.47×</div>
+        <div class="stat-label">context compression<br><span class="muted">on SWE-Gym, neutral resolve rate</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── Framework ────────────────────────── -->
+  <section id="framework">
+    <div class="prose">
+      <h2>How it works</h2>
+    </div>
+    <div class="framework-grid">
+      <figure>
+        <img src="assets/figures/framework.png"
+             srcset="assets/figures/framework@2x.png 2x"
+             alt="MemGym architecture: five environments share a memory module that wraps the prompt to the policy LLM. Trajectories feed a replay-augmentation pipeline producing SAFE/HARMFUL labels for MemRM.">
+        <figcaption><strong>Figure 2.</strong> The MemGym architecture.</figcaption>
+      </figure>
+      <div class="framework-text">
+        <p>
+          Five environments share a memory module that wraps the prompt to the policy LLM, so the
+          same strategy runs on any environment unchanged. The wrapper exposes a single contract for
+          <em>compress</em>, <em>recall</em>, and <em>write</em>, while the policy stays unaware.
+        </p>
+        <p>
+          Trajectories feed a <strong>replay-augmentation pipeline</strong> that produces
+          <code class="safe">SAFE</code> and <code class="harmful">HARMFUL</code> labels for
+          MemRM — turning a multi-minute Docker rollout into a sub-second classifier call when
+          you iterate on strategies.
+        </p>
+        <p>
+          MemGym-DR and MemGym-CodeQA come from in-house synthetic pipelines that are
+          <em>length-controllable</em> and <em>ablation-verified</em>, so the memory channel
+          (not parametric recall or distractors) is what's being measured.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── Leaderboard ───────────────────────── -->
+  <section id="leaderboard">
+    <div class="prose">
+      <h2>Leaderboard</h2>
+      <p class="muted">
+        Results across all five evaluation tracks. Each row is paired with a same-reasoner,
+        no-memory baseline (italic, pinned to the bottom of its group) so the Δ column reports
+        memory-isolated gain, not absolute task performance. This page reads
+        <a href="data/leaderboard.json"><code>data/leaderboard.json</code></a> at load time —
+        appending a row to that file is all it takes to publish a new result.
+      </p>
+    </div>
+    <nav id="lb-tabs" class="lb-tabs" aria-label="Jump to track"></nav>
+    <div id="lb-container"></div>
+    <p class="lb-meta muted" id="lb-meta"></p>
+  </section>
+
+  <!-- ───────────────────── Additional figures ──────────────────────── -->
+  <section id="figures-extra" class="figure-section">
+    <div class="prose">
+      <h2>Synthetic pipelines &amp; MemRM training</h2>
+    </div>
+    <div class="figure-grid">
+      <figure>
+        <img src="assets/figures/synthetic_memory.png"
+             srcset="assets/figures/synthetic_memory@2x.png 2x"
+             alt="QA accuracy across memory token budgets on MemGym-CodeQA and judge scores at varying hop depths on MemGym-DR. A-Mem leads at maximum pressure on both.">
+        <figcaption>
+          <strong>Figure 3.</strong> Memory strategies on the two synthetic-memory benchmarks.
+          A-Mem leads at the maximum-pressure point on both (500k tokens on MemGym-CodeQA,
+          5/6-hop on MemGym-DR).
+        </figcaption>
+      </figure>
+      <figure>
+        <img src="assets/figures/rm_training_curves.png"
+             srcset="assets/figures/rm_training_curves@2x.png 2x"
+             alt="MemRM training dynamics. AUROC plateaus near 0.985 from around step 200 of 600.">
+        <figcaption>
+          <strong>Figure 4.</strong> MemRM training dynamics on SWE-Gym compression events
+          (Qwen3-1.7B-Base + QLoRA, 32K context, 600 steps, 8×A100-40GB).
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── Citation ──────────────────────────── -->
+  <section id="cite">
+    <div class="prose">
+      <h2>Citation</h2>
+      <p>If you use MemGym in your work, please cite:</p>
+      <pre id="bibtex-inline"><code>@misc{memgym2026,
+  title  = {MemGym: a Long-Horizon Memory Environment for LLM Agents},
+  author = {Xu, Wujiang and [Co-authors TBD]},
+  year   = {2026},
+  note   = {NeurIPS 2026 submission},
+  url    = {https://github.com/WujiangXu/MemGym}
+}</code></pre>
+      <button class="btn btn-outline" id="copy-bibtex-inline" type="button">Copy</button>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── Footer ────────────────────────────── -->
+  <footer>
+    <div class="prose">
+      <p class="muted">
+        Rutgers University · Capital One · Princeton University &nbsp;|&nbsp;
+        Code released under Apache License 2.0 &nbsp;|&nbsp;
+        <a href="https://github.com/WujiangXu/MemGym">github.com/WujiangXu/MemGym</a>
+      </p>
+    </div>
+  </footer>
+
+</main>
+
+<!-- ─────────────────────────── BibTeX dialog ─────────────────────────── -->
+<dialog id="bibtex-dialog" aria-label="BibTeX citation">
+  <button id="bibtex-close" aria-label="Close" type="button">&times;</button>
+  <h3>Cite MemGym</h3>
+  <pre id="bibtex-content"><code>@misc{memgym2026,
+  title  = {MemGym: a Long-Horizon Memory Environment for LLM Agents},
+  author = {Xu, Wujiang and [Co-authors TBD]},
+  year   = {2026},
+  note   = {NeurIPS 2026 submission},
+  url    = {https://github.com/WujiangXu/MemGym}
+}</code></pre>
+  <button class="btn btn-primary" id="bibtex-copy" type="button">Copy to clipboard</button>
+</dialog>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>
