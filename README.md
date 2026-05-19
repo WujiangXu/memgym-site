@@ -1,6 +1,6 @@
 # memgym-site
 
-Project landing page for **MemGym: a Long-Horizon Memory Environment for LLM Agents** (NeurIPS 2026 submission).
+Project landing page for **MemGym: a Long-Horizon Memory Environment for LLM Agents**.
 
 Code: <https://github.com/WujiangXu/MemGym>
 
@@ -23,7 +23,7 @@ Edit `data/leaderboard.json`, append one entry to the `entries` array (schema fi
 bash scripts/convert_figures.sh
 ```
 
-Requires `pdftoppm` (`apt-get install poppler-utils`). Paper source path is hardcoded to `/common/users/wx139/overleaf-github-latex/Neurips26_memgym/figure/`.
+Requires `pdftoppm` (`apt-get install poppler-utils`). The paper source path is hardcoded in `scripts/convert_figures.sh` — edit `SRC` there to match your figure directory.
 
 ## Deploy
 

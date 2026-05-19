@@ -6,7 +6,7 @@
 
 set -euo pipefail
 
-SRC="/common/users/wx139/overleaf-github-latex/Neurips26_memgym/figure"
+SRC="${MEMGYM_FIGURE_SRC:-/path/to/paper/figure}"
 OUT="assets/figures"
 mkdir -p "$OUT"
 
