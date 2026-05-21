@@ -51,12 +51,14 @@
       </p>
 
       <div class="hero-buttons">
-        <!-- TODO: replace href with the arXiv URL once available, and remove aria-disabled. -->
-        <a class="btn btn-primary btn-disabled" aria-disabled="true" role="link">
-          <span class="btn-icon" aria-hidden="true">📄</span> arXiv · coming soon
+        <a class="btn btn-primary" href="https://arxiv.org/pdf/2605.20833" target="_blank" rel="noopener">
+          <span class="btn-icon" aria-hidden="true">📄</span> arXiv
         </a>
         <a class="btn btn-outline" href="https://github.com/WujiangXu/MemGym" target="_blank" rel="noopener">
           <span class="btn-icon" aria-hidden="true">⌥</span> GitHub
+        </a>
+        <a class="btn btn-outline" href="https://huggingface.co/MemGym" target="_blank" rel="noopener">
+          <span class="btn-icon" aria-hidden="true">🤗</span> Hugging Face
         </a>
         <button class="btn btn-outline" id="open-bibtex" type="button">
           <span class="btn-icon" aria-hidden="true">❝</span> BibTeX
@@ -219,12 +221,13 @@
     <div class="prose">
       <h2>Citation</h2>
       <p>If you use MemGym in your work, please cite:</p>
-      <pre id="bibtex-inline"><code>@misc{memgym2026,
-  title  = {MemGym: a Long-Horizon Memory Environment for LLM Agents},
-  author = {Xu, Wujiang and Wang, Yu and Mei, Kai and Liang, Kaiqu and Wang, Zhenting and Jin, Mingyu and Zhang, Han and Zhang, Shi-Xiong and Hua, Wenyue and Sahu, Sambit and Metaxas, Dimitris N.},
-  year   = {2026},
-  note   = {Preprint},
-  url    = {https://github.com/WujiangXu/MemGym}
+      <pre id="bibtex-inline"><code>@misc{xu2026memgym,
+  title         = {MemGym: a Long-Horizon Memory Environment for LLM Agents},
+  author        = {Xu, Wujiang and Wang, Yu and Mei, Kai and Liang, Kaiqu and Wang, Zhenting and Jin, Mingyu and Zhang, Han and Zhang, Shi-Xiong and Hua, Wenyue and Sahu, Sambit and Metaxas, Dimitris N.},
+  year          = {2026},
+  eprint        = {2605.20833},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI}
 }</code></pre>
       <button class="btn btn-outline" id="copy-bibtex-inline" type="button">Copy</button>
     </div>
@@ -247,12 +250,13 @@
 <dialog id="bibtex-dialog" aria-label="BibTeX citation">
   <button id="bibtex-close" aria-label="Close" type="button">&times;</button>
   <h3>Cite MemGym</h3>
-  <pre id="bibtex-content"><code>@misc{memgym2026,
-  title  = {MemGym: a Long-Horizon Memory Environment for LLM Agents},
-  author = {Xu, Wujiang and Wang, Yu and Mei, Kai and Liang, Kaiqu and Wang, Zhenting and Jin, Mingyu and Zhang, Han and Zhang, Shi-Xiong and Hua, Wenyue and Sahu, Sambit and Metaxas, Dimitris N.},
-  year   = {2026},
-  note   = {Preprint},
-  url    = {https://github.com/WujiangXu/MemGym}
+  <pre id="bibtex-content"><code>@misc{xu2026memgym,
+  title         = {MemGym: a Long-Horizon Memory Environment for LLM Agents},
+  author        = {Xu, Wujiang and Wang, Yu and Mei, Kai and Liang, Kaiqu and Wang, Zhenting and Jin, Mingyu and Zhang, Han and Zhang, Shi-Xiong and Hua, Wenyue and Sahu, Sambit and Metaxas, Dimitris N.},
+  year          = {2026},
+  eprint        = {2605.20833},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI}
 }</code></pre>
   <button class="btn btn-primary" id="bibtex-copy" type="button">Copy to clipboard</button>
 </dialog>
