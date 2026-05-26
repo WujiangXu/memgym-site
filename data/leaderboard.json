@@ -14,6 +14,13 @@
       "swe":      "Coding. SWE-Gym resolve rate (%); memory is measured for compression effect.",
       "codeqa":   "Synthetic code-QA. Accuracy at fixed token budget; baseline is no-memory.",
       "dr":       "Synthetic deep-research. Judge score in [0,1]; baseline is no-memory."
+    },
+    "tracks": {
+      "tau2":     { "regime": "Tool-use dialogue",         "blurb": "Given a multi-turn tool-use dialogue, carry user state across turns and complete the task. Memory is scored against a same-reasoner, no-memory run.",      "headline": "+8.7pp",  "headline_label": "memory gain" },
+      "webarena": { "regime": "Computer use",              "blurb": "Given a live web environment observed as a text accessibility tree, recall prior page state to finish multi-step tasks.",                                  "headline": "+4.3pp",  "headline_label": "memory gain" },
+      "swe":      { "regime": "Coding",                    "blurb": "Given long SWE-Gym repair trajectories, compress the working context without dropping the resolve rate.",                                              "headline": "1.47×", "headline_label": "context compression" },
+      "codeqa":   { "regime": "Coding · synthetic QA",     "blurb": "Given a length-controllable code corpus, answer questions at a fixed memory-token budget. Pure memory channel, no parametric recall.",            "headline": "+0.55",   "headline_label": "accuracy gain" },
+      "dr":       { "regime": "Deep research · synthetic", "blurb": "Given a multi-hop research trail, retain evidence across hops and answer at 5/6-hop depth, the maximum-memory-pressure point.",                  "headline": "+0.509",  "headline_label": "judge-score gain" }
     }
   },
   "entries": [

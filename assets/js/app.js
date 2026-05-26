@@ -33,6 +33,7 @@ async function loadLeaderboard() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     renderLeaderboard(data, container, tabs, meta);
+    renderDomainCards(data);
   } catch (err) {
     console.warn('[leaderboard] fetch failed:', err);
     container.innerHTML = `
@@ -110,6 +111,77 @@ function renderLeaderboard(data, container, tabs, meta) {
     meta.textContent = `Last updated: ${data.meta.last_updated}.  ` +
       `Add a row by editing data/leaderboard.json on GitHub.`;
   }
+}
+
+/* ──────────────────────── domain cards ──────────────────────── */
+function renderDomainCards(data) {
+  const host = document.getElementById('domain-cards');
+  if (!host) return;
+
+  const labels = data.meta?.track_labels ?? {};
+  const tracks = data.meta?.tracks ?? {};
+
+  // group entries by track (same shape the leaderboard uses)
+  const groups = {};
+  for (const e of data.entries) (groups[e.track] ??= []).push(e);
+
+  host.innerHTML = '';
+  for (const t of TRACK_ORDER) {
+    const rows = groups[t];
+    const tmeta = tracks[t];
+    if (!rows?.length || !tmeta) continue;
+
+    // best memory strategy = highest-scoring non-baseline row; pair it with the no-memory baseline
+    const candidates = rows.filter(r => !r.is_baseline);
+    if (!candidates.length) continue;
+    const best = candidates.reduce((a, b) => (b.score > a.score ? b : a));
+    const base = rows.find(r => r.is_baseline);
+    const units = best.score_units ?? '';
+
+    const card = document.createElement('article');
+    card.className = 'domain-card';
+    card.innerHTML = `
+      <span class="regime-tag">${escapeHtml(tmeta.regime ?? '')}</span>
+      <h3 class="card-title">${escapeHtml(labels[t] ?? t)}</h3>
+      <p class="card-n">${(best.n ?? 0).toLocaleString()} tasks</p>
+      <div class="card-headline">
+        <span class="num">${escapeHtml(tmeta.headline ?? '')}</span>
+        <span class="num-label">${escapeHtml(tmeta.headline_label ?? '')}</span>
+      </div>
+      <p class="card-desc">${escapeHtml(tmeta.blurb ?? '')}</p>
+      ${scoreBar(best, base, units)}`;
+    host.appendChild(card);
+  }
+}
+
+function scoreBar(best, base, units) {
+  const scale = units === '%' ? 100 : 1;            // % tracks fill /100, acc/judge fill /1
+  const pct = (v) => Math.max(0, Math.min(100, (v / scale) * 100));
+
+  const rows = [{
+    name: best.method, cls: 'best',
+    w: pct(best.score), val: fmtCardVal(best.score, units),
+  }];
+  if (base && base.score != null) {
+    rows.push({
+      name: 'None', cls: 'baseline',
+      w: pct(base.score), val: fmtCardVal(base.score, units),
+    });
+  }
+
+  const bars = rows.map(r => `
+      <div class="bar-row">
+        <span class="bar-name" title="${escapeHtml(r.name)}">${escapeHtml(r.name)}</span>
+        <span class="bar-track"><span class="bar-fill ${r.cls}" style="width:${r.w.toFixed(1)}%"></span></span>
+        <span class="bar-val">${r.val}</span>
+      </div>`).join('');
+  return `<div class="score-bar">${bars}</div>`;
+}
+
+function fmtCardVal(score, units) {
+  if (score == null) return '—';
+  if (units === '%') return `${score.toFixed(1)}%`;
+  return Math.abs(score) < 0.1 ? score.toFixed(3) : score.toFixed(2);
 }
 
 function buildTable(rows) {
