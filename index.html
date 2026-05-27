@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=2">
+  <link rel="stylesheet" href="assets/css/style.css?v=3">
 </head>
 <body>
 
@@ -85,6 +85,13 @@
   <section id="framework" class="figure-hero">
     <div class="prose">
       <h2>How it works</h2>
+      <p>
+        Every environment plugs into one memory module that wraps the prompt to the policy LLM, so a
+        memory strategy is written once and runs everywhere — and is scored in isolation from
+        reasoning and tool use. Recorded trajectories train <strong>MemRM</strong>, a lightweight
+        reward model that judges whether a compression preserves the agent's behavior without
+        re-running the agent.
+      </p>
     </div>
     <figure>
       <img src="assets/figures/framework.png"
@@ -93,6 +100,15 @@
            loading="lazy">
       <figcaption><strong>Figure 2.</strong> One memory module wraps every environment behind a single compress / recall / write contract — so the policy stays unchanged and memory is scored in isolation.</figcaption>
     </figure>
+    <div class="prose">
+      <p class="callout">
+        <strong>Fast path vs. full rollout.</strong> Measuring memory gain the full way takes two
+        paired rollouts per instance — on SWE-Gym that is ≈110 turns and ≈$4.20 of Sonnet 4.5, and a
+        5-strategy&nbsp;×&nbsp;3-seed sweep runs <strong>$6,300</strong>. MemRM replaces each
+        ~10-minute Docker rollout with a <strong>sub-second</strong> scalar read at
+        <strong>0.985&nbsp;AUROC</strong>.
+      </p>
+    </div>
   </section>
 
   <!-- ─────────────────────────── Leaderboard ───────────────────────── -->
@@ -157,6 +173,6 @@
   <button class="btn btn-primary" id="bibtex-copy" type="button">Copy to clipboard</button>
 </dialog>
 
-<script src="assets/js/app.js?v=2"></script>
+<script src="assets/js/app.js?v=3"></script>
 </body>
 </html>

@@ -4,7 +4,7 @@
  *       Preview locally with `python -m http.server 8000` (see README).
  */
 
-const TRACK_ORDER = ['tau2', 'webarena', 'swe', 'codeqa', 'dr'];
+const TRACK_ORDER = ['tau2', 'webarena', 'swe', 'codeqa', 'dr', 'memrm'];
 
 const COLS = [
   { key: 'method',     label: 'Method',  cls: '' },
@@ -83,24 +83,24 @@ function renderLeaderboard(data, container, tabs, meta) {
     tabs.appendChild(btn);
     tabButtons.push(btn);
   };
+  // a track is shown if it has rows OR is a declared track (label present) —
+  // declared-but-empty tracks render a "coming soon" placeholder.
+  const shownTracks = TRACK_ORDER.filter(t => groups[t]?.length || labels[t]);
+
   addTab('all', 'All tracks');
-  for (const t of TRACK_ORDER) {
-    if (!groups[t]?.length) continue;
-    addTab(t, labels[t] ?? t);
-  }
+  for (const t of shownTracks) addTab(t, labels[t] ?? t);
 
   // tables
   container.innerHTML = '';
-  for (const t of TRACK_ORDER) {
+  for (const t of shownTracks) {
     const rows = groups[t];
-    if (!rows?.length) continue;
 
     const wrap = document.createElement('div');
     wrap.className = 'lb-group';
     wrap.id = `lb-group-${t}`;
 
     const h3 = document.createElement('h3');
-    h3.innerHTML = `${labels[t] ?? t} <span class="lb-track-label">${t}</span>`;
+    h3.innerHTML = `${escapeHtml(labels[t] ?? t)} <span class="lb-track-label">${escapeHtml(t)}</span>`;
     wrap.appendChild(h3);
 
     if (descs[t]) {
@@ -110,10 +110,17 @@ function renderLeaderboard(data, container, tabs, meta) {
       wrap.appendChild(p);
     }
 
-    const tableWrap = document.createElement('div');
-    tableWrap.className = 'lb-table-wrap';
-    tableWrap.appendChild(buildTable(rows));
-    wrap.appendChild(tableWrap);
+    if (rows?.length) {
+      const tableWrap = document.createElement('div');
+      tableWrap.className = 'lb-table-wrap';
+      tableWrap.appendChild(buildTable(rows));
+      wrap.appendChild(tableWrap);
+    } else {
+      const empty = document.createElement('p');
+      empty.className = 'lb-empty';
+      empty.innerHTML = `<span class="lb-empty-tag">Coming soon</span>No entries yet — submissions welcome.`;
+      wrap.appendChild(empty);
+    }
 
     container.appendChild(wrap);
   }
@@ -183,7 +190,7 @@ function scoreBar(best, base, units) {
   }
 
   const bars = rows.map(r => `
-      <div class="bar-row">
+      <div class="bar-row ${r.cls}">
         <span class="bar-name" title="${escapeHtml(r.name)}">${escapeHtml(r.name)}</span>
         <span class="bar-track"><span class="bar-fill ${r.cls}" style="width:${r.w.toFixed(1)}%"></span></span>
         <span class="bar-val">${r.val}</span>

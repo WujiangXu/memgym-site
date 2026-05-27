@@ -6,14 +6,16 @@
       "webarena": "WebArena-Infinity",
       "swe":      "SWE-Gym",
       "codeqa":   "MemGym-CodeQA",
-      "dr":       "MemGym-DR"
+      "dr":       "MemGym-DR",
+      "memrm":    "Memory Reward Models"
     },
     "track_descriptions": {
       "tau2":     "Tool-use dialogue. Task success rate (%), paired baseline-vs-memory.",
       "webarena": "Computer use. Task success rate (%) on text accessibility-tree observations.",
       "swe":      "Coding. SWE-Gym resolve rate (%); memory is measured for compression effect.",
       "codeqa":   "Synthetic code-QA. Accuracy at fixed token budget; baseline is no-memory.",
-      "dr":       "Synthetic deep-research. Judge score in [0,1]; baseline is no-memory."
+      "dr":       "Synthetic deep-research. Judge score in [0,1]; baseline is no-memory.",
+      "memrm":    "Reward models that score a memory compression without re-running the agent. AUROC against full-rollout outcomes — leaderboard coming soon."
     },
     "tracks": {
       "tau2":     { "regime": "Tool-use dialogue",         "blurb": "Given a multi-turn tool-use dialogue, carry user state across turns and complete the task. Memory is scored against a same-reasoner, no-memory run.",      "headline": "+8.7pp",  "headline_label": "memory gain" },
