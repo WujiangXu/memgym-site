@@ -13,8 +13,8 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css?v=2">
 </head>
 <body>
 
@@ -33,41 +33,38 @@
       </p>
 
       <div class="hero-buttons">
-        <a class="btn btn-primary" href="https://arxiv.org/pdf/2605.20833" target="_blank" rel="noopener">
+        <a class="btn btn-arxiv" href="https://arxiv.org/pdf/2605.20833" target="_blank" rel="noopener">
           <span class="btn-icon" aria-hidden="true">📄</span> arXiv
         </a>
-        <a class="btn btn-outline" href="https://github.com/WujiangXu/MemGym" target="_blank" rel="noopener">
-          <span class="btn-icon" aria-hidden="true">⌥</span> GitHub
+        <a class="btn btn-github" href="https://github.com/WujiangXu/MemGym" target="_blank" rel="noopener">
+          <span class="btn-icon" aria-hidden="true">★</span> GitHub
         </a>
-        <a class="btn btn-outline" href="https://huggingface.co/MemGym" target="_blank" rel="noopener">
+        <a class="btn btn-hf" href="https://huggingface.co/MemGym" target="_blank" rel="noopener">
           <span class="btn-icon" aria-hidden="true">🤗</span> Hugging Face
         </a>
-        <button class="btn btn-outline" id="open-bibtex" type="button">
+        <button class="btn btn-bibtex" id="open-bibtex" type="button">
           <span class="btn-icon" aria-hidden="true">❝</span> BibTeX
         </button>
       </div>
-
-      <p class="hero-stats">
-        <span><b>5</b> evaluation tracks</span>
-        <span><b>4</b> agentic regimes</span>
-        <span><b>4,794</b> tasks</span>
-        <span><b>0.985</b> MemRM AUROC</span>
-      </p>
     </div>
   </header>
 
-  <!-- ───────────────────── Framework (Figure 2, large) ───────────────────── -->
-  <section id="framework" class="figure-hero">
+  <!-- ───────────────────── Motivation (Figure 1, large) ───────────────────── -->
+  <section id="motivation" class="figure-hero">
+    <div class="prose">
+      <h2>Why MemGym?</h2>
+      <p>
+        Prior memory benchmarks test recall of personal facts in multi-turn chat. MemGym instead
+        measures the memory an agent forms <em>while it works</em> — across coding, tool use,
+        computer use, and deep research — where memory actually decides whether a task succeeds.
+      </p>
+    </div>
     <figure>
-      <img src="assets/figures/framework.png"
-           srcset="assets/figures/framework@2x.png 2x"
-           alt="MemGym architecture: five environments share a memory module that wraps the prompt to the policy LLM. Trajectories feed a replay-augmentation pipeline producing SAFE/HARMFUL labels for MemRM."
+      <img src="assets/figures/intro.png"
+           srcset="assets/figures/intro@2x.png 2x"
+           alt="MemGym overview: five evaluation tracks across four agentic regimes, all sharing a single memory-reasoning interface that enables memory-isolated scoring."
            loading="eager">
-      <figcaption>
-        <strong>Figure 2 — The MemGym architecture.</strong> Five environments share one memory
-        module behind a single <em>compress / recall / write</em> contract, so the same strategy
-        runs anywhere unchanged and is scored in isolation from reasoning and tool use.
-      </figcaption>
+      <figcaption><strong>Figure 1.</strong> Five tracks across four agentic regimes, behind one shared memory interface.</figcaption>
     </figure>
   </section>
 
@@ -84,19 +81,17 @@
     <div id="domain-cards" class="domain-cards"></div>
   </section>
 
-  <!-- ─────────────────────────── Overview (Figure 1) ──────────────────────── -->
-  <section id="overview" class="figure-section">
+  <!-- ───────────────────── How it works (Figure 2, large) ───────────────────── -->
+  <section id="framework" class="figure-hero">
+    <div class="prose">
+      <h2>How it works</h2>
+    </div>
     <figure>
-      <img src="assets/figures/intro.png"
-           srcset="assets/figures/intro@2x.png 2x"
-           alt="MemGym overview: five evaluation tracks across four agentic regimes, all sharing a single memory-reasoning interface that enables memory-isolated scoring."
+      <img src="assets/figures/framework.png"
+           srcset="assets/figures/framework@2x.png 2x"
+           alt="MemGym architecture: five environments share a memory module that wraps the prompt to the policy LLM. Trajectories feed a replay-augmentation pipeline producing SAFE/HARMFUL labels for MemRM."
            loading="lazy">
-      <figcaption>
-        <strong>Figure 1.</strong> MemGym unifies five evaluation tracks across four agentic
-        regimes (tool-use dialogue, multi-turn search, coding, computer use) behind a shared
-        interface that separates memory from reasoning and supports memory-isolated scoring
-        with explicit memory rewards.
-      </figcaption>
+      <figcaption><strong>Figure 2.</strong> One memory module wraps every environment behind a single compress / recall / write contract — so the policy stays unchanged and memory is scored in isolation.</figcaption>
     </figure>
   </section>
 
@@ -162,6 +157,6 @@
   <button class="btn btn-primary" id="bibtex-copy" type="button">Copy to clipboard</button>
 </dialog>
 
-<script src="assets/js/app.js"></script>
+<script src="assets/js/app.js?v=2"></script>
 </body>
 </html>

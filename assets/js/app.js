@@ -63,19 +63,30 @@ function renderLeaderboard(data, container, tabs, meta) {
     });
   }
 
-  // tabs
+  // tabs: "All" (default) plus one per track. Clicking filters which groups show.
   tabs.innerHTML = '';
-  for (const t of TRACK_ORDER) {
-    if (!groups[t]?.length) continue;
+  const tabButtons = [];
+  const setFilter = (sel) => {
+    for (const t of TRACK_ORDER) {
+      const g = document.getElementById(`lb-group-${t}`);
+      if (g) g.hidden = !(sel === 'all' || sel === t);
+    }
+    tabButtons.forEach(b => b.classList.toggle('active', b.dataset.track === sel));
+  };
+  const addTab = (key, text) => {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'lb-tab';
-    btn.textContent = labels[t] ?? t;
-    btn.addEventListener('click', () => {
-      document.getElementById(`lb-group-${t}`)
-        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+    btn.dataset.track = key;
+    btn.textContent = text;
+    btn.addEventListener('click', () => setFilter(key));
     tabs.appendChild(btn);
+    tabButtons.push(btn);
+  };
+  addTab('all', 'All tracks');
+  for (const t of TRACK_ORDER) {
+    if (!groups[t]?.length) continue;
+    addTab(t, labels[t] ?? t);
   }
 
   // tables
@@ -106,6 +117,8 @@ function renderLeaderboard(data, container, tabs, meta) {
 
     container.appendChild(wrap);
   }
+
+  setFilter('all');  // default view shows every track
 
   if (meta && data.meta?.last_updated) {
     meta.textContent = `Last updated: ${data.meta.last_updated}.  ` +
